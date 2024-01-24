@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\todolist;
+use App\Models\TodoList;
 use Illuminate\Http\Request;
 
 class TodoListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-     return view("welcome");
+        $data["items"] = TodoList::all();
+     return view("welcome", $data);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -34,13 +33,13 @@ class TodoListController extends Controller
                 'dueDate'=>'required',
             ]
             );
-
-            $todo=new todolist;
-            $todo->name=$request['name'];
-            $todo->work= $request['work'];
-            $todo->dueDate=$request['dueDate'];
+            $todo=new TodoList;
+            $todo->name=$request->name;
+            $todo->work= $request->work;
+            $todo->due_date=$request->dueDate;
             $todo->save();
 
+            return redirect(route("todolist.index"));
            
     }
 
@@ -55,25 +54,44 @@ class TodoListController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(todolist $todolist)
+    public function edit($id)
     {
-        //
+        $data["item"] = TodoList::find($id);
+        
+        return view("layout.update", $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, todolist $todolist)
+    public function update(request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'work' => 'required',
+            'dueDate' => 'required|date',
+        ]);
+
+        $item = TodoList::find($id);
+        $item->name = $validatedData['name'];
+        $item->work = $validatedData['work'];
+        $item->due_date = $validatedData['dueDate'];
+
+        $item->save();
+
+        return redirect()->route('todolist.index')->with('success', 'Task updated successfully');
+
+    
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(todolist $todolist)
+    public function destroy($id)
     {
-        //
+        $todoList = TodoList::find($id);
+        $todoList->delete();
+        return redirect(route("todolist.index"));
     }
     
     

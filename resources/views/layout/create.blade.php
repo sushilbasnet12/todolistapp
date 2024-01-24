@@ -7,11 +7,11 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center my-5">
         <div class="h2">Add Todo</div>
-        <a href="{{ route("todo.home") }}" class="btn btn-primary btn-lg">Back</a>
+        <a href="{{ route("todolist.index") }}" class="btn btn-primary btn-lg">Back</a>
     </div>
     <div class="card">
         <div class="card-body">
-            <form action="{{ route("todo.store") }}" method="post">
+            <form action="{{ route("todolist.store") }}" method="post">
                 @csrf
                 <label for="" class="form-label mt-4" >Name</label>
                 <input type="text" name="name" class="form-control">

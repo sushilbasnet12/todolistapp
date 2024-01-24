@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class todolist extends Model
+class TodoList extends Model
 {
     use HasFactory;
-    protected $table =['todolists'];
 
     protected $primary_key = 'id';
 
-    protected $fillable = ["name", "work", "dueDate"];
+    protected $fillable = ["name", "work", "due_date"];
+
+    protected $table = 'todo_lists';
 
     
 }

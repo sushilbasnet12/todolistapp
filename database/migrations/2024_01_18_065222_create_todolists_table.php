@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('todolists', function (Blueprint $table) {
+        Schema::create('todo_lists', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('work');
-            $table->string('dueDate');
+            $table->string('due_date');
             $table->timestamps();
         });
     }
